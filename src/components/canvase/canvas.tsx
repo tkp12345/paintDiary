@@ -44,8 +44,10 @@ export const Canvas = () => {
   return (
     <div className="flex flex-col items-center justify-center p-4 space-x-2  bg-gray-light rounded-lg shadow">
       <canvas ref={canvasRef} width={800} height={600} onMouseMove={draw} className="border-1 border-gray" />
-      <CanvasButton onClick={initCanvas}>초기화</CanvasButton>
-      <CanvasButton onClick={saveCanvas}>이미지 저장</CanvasButton>
+      <div className="flex ">
+        <CanvasButton onClick={initCanvas}>초기화</CanvasButton>
+        <CanvasButton onClick={saveCanvas}>이미지 저장</CanvasButton>
+      </div>
     </div>
   )
 }
