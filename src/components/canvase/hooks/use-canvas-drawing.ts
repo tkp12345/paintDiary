@@ -1,4 +1,4 @@
-import { forwardRef, RefObject, useCallback, useEffect, useState } from 'react'
+import { RefObject, useCallback, useEffect, useState } from 'react'
 import { INIT_BACKGROUND_CANVAS } from '../../../constants/constants-canvas'
 import { CanvasType } from '../../types/cnavas-types'
 
@@ -10,11 +10,14 @@ interface Point {
 /*
  드로잉 액션 처리 훅스
  */
-export const useCanvasDrawing = (ref: RefObject<HTMLCanvasElement>, props: CanvasType) => {
+export const useCanvasDrawing = (
+  ref: RefObject<HTMLCanvasElement>,
+  ctx: CanvasRenderingContext2D | null,
+  props: CanvasType,
+) => {
   const { color, lineWidth, tool } = props
 
   const [isDrawing, setIsDrawing] = useState<boolean>(false)
-  const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [points, setPoints] = useState<Point[]>([])
 
   useEffect(() => {
@@ -25,7 +28,6 @@ export const useCanvasDrawing = (ref: RefObject<HTMLCanvasElement>, props: Canva
       if (renderCtx) {
         renderCtx.fillStyle = INIT_BACKGROUND_CANVAS
         renderCtx.fillRect(0, 0, ref.current.width, ref.current.height)
-        setCtx(renderCtx)
       }
     }
   }, [])
@@ -54,5 +56,5 @@ export const useCanvasDrawing = (ref: RefObject<HTMLCanvasElement>, props: Canva
     [isDrawing, points, ctx, lineWidth, color, tool],
   )
 
-  return { setCtx, setIsDrawing, draw: drawAction, setPoints, ctx, points, tool, color }
+  return { isDrawing, setIsDrawing, draw: drawAction, setPoints, ctx, points, tool, color }
 }
