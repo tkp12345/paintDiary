@@ -7,7 +7,7 @@ import debounce from '../../../utils/utils'
 /*
   캔버스 저장,초기화 버튼 관리 훅스
  */
-export const UseCanvasConfirm = (
+export const useCanvasConfirm = (
   ctx: CanvasRenderingContext2D | null,
   canvasRef: React.RefObject<HTMLCanvasElement>,
 ) => {
@@ -17,6 +17,7 @@ export const UseCanvasConfirm = (
       if (ctx && canvasRef.current) {
         ctx.fillStyle = INIT_BACKGROUND_CANVAS
         ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+
         toast.success('캔버스가 초기화 됬습니다.', { ...toastOptions })
       }
     }, 200),

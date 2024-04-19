@@ -9,8 +9,9 @@ interface useCanvasImgUploadProps {
   canvasRef: RefObject<HTMLCanvasElement>
   ctx: CanvasRenderingContext2D | null
   uploadedImgRef: MutableRefObject<string | null>
+  initCanvasAction: () => void
 }
-export const useCanvasImgUpload = ({ canvasRef, ctx, uploadedImgRef }: useCanvasImgUploadProps) => {
+export const useCanvasImgUpload = ({ canvasRef, ctx, uploadedImgRef, initCanvasAction }: useCanvasImgUploadProps) => {
   const imgInputRef = useRef<HTMLInputElement>(null)
 
   const canvasImgUpload = useCallback(
@@ -34,6 +35,7 @@ export const useCanvasImgUpload = ({ canvasRef, ctx, uploadedImgRef }: useCanvas
             ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
             ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height)
             uploadedImgRef.current = target.result as string
+            initCanvasAction()
           }
         }
         img.onerror = () => {
@@ -47,13 +49,14 @@ export const useCanvasImgUpload = ({ canvasRef, ctx, uploadedImgRef }: useCanvas
       }
       reader.readAsDataURL(file)
     },
-    [canvasRef, ctx, uploadedImgRef],
+    [canvasRef, ctx],
   )
 
   const initImgUpload = useCallback(() => {
     if (imgInputRef.current) {
       imgInputRef.current.value = '' // 입력된 파일 초기화
     }
+    uploadedImgRef.current = null
   }, [])
 
   return { canvasImgUpload, imgInputRef, initImgUpload }

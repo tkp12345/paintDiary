@@ -36,7 +36,12 @@ export const Canvas = () => {
     uploadedImgRef,
   })
 
-  const { canvasImgUpload, imgInputRef, initImgUpload } = useCanvasImgUpload({ canvasRef, ctx, uploadedImgRef })
+  const { canvasImgUpload, imgInputRef, initImgUpload } = useCanvasImgUpload({
+    canvasRef,
+    ctx,
+    uploadedImgRef,
+    initCanvasAction,
+  })
 
   /*
     캔버스 초기화
@@ -99,6 +104,11 @@ export const Canvas = () => {
   const canvasMouseLeave = () => {
     if (isDrawing) {
       setIsDrawing(false)
+      setUndoActions((prevActions) => [
+        ...prevActions,
+        { type: tool, color, lineWidth: props.lineWidth, paths: [...currentPath] },
+      ])
+      setCurrentPath([]) // 현재 경로 초기화
     }
   }
 
