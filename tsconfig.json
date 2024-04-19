@@ -9,6 +9,7 @@
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
+    "types": ["node", "jest"]
   },
   "include": [
     "src/**/*",
