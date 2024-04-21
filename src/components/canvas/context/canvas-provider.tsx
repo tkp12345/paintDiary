@@ -1,6 +1,7 @@
-import React, { createContext, PropsWithChildren, ReactNode, useContext, useState } from 'react'
+import type { PropsWithChildren } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { INIT_COLOR_CANVAS, INIT_LINE_WIDTH_CANVAS } from '../../../constants/constants-canvas'
-import { CanvasType } from '../../types/cnavas-types'
+import type { CanvasType } from '../../types/cnavas-types'
 
 const CanvasContext = createContext<CanvasType | null>(null)
 

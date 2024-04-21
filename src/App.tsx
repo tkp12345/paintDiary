@@ -1,8 +1,8 @@
 import React from 'react'
+import 'react-toastify/dist/ReactToastify.css'
 import { CanvasContainer } from './container/canvas-container'
 import { ToastContainer } from 'react-toastify'
 import { toastDefaultOptions } from '../lib/react-toastify/toastify-options'
-import 'react-toastify/dist/ReactToastify.css'
 
 const App: React.FC = () => {
   return (
