@@ -6,3 +6,8 @@ export interface CanvasType {
   lineWidth: number
   setLineWidth: (lineWidth: number) => void
 }
+
+export interface Point {
+  x: number
+  y: number
+}

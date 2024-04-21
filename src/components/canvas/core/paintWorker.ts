@@ -1,7 +1,6 @@
 /*
  canvas paint worker  :OffscreenCanvas를 사용, Worker를 도입 캔버스 paint 로직 스레드 분리
  */
-
 ;(function () {
   type PaintWorkerMessage = {
     type: 'setup' | 'draw' | 'end' | 'reset'
@@ -63,6 +62,7 @@
   function resetCanvas(canvas: OffscreenCanvas | null, ctx: OffscreenCanvasRenderingContext2D | null) {
     if (ctx && canvas) {
       ctx.clearRect(0, 0, canvas.width, canvas.height) // 캔버스 전체 클리어
+      postMessage({ type: 'resetComplete' }) // 작업 완료 메시지 전송
     }
   }
 })()

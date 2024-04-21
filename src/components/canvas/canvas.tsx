@@ -4,6 +4,8 @@ import { useCanvasImgUpload } from './hooks/use-canvas-img-upload'
 import { CanvasConfirm } from './canvas-confirm'
 import type { Point } from '../types/cnavas-types'
 import { getCanvasPosition } from './utils/canvas'
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../../constants/constants-canvas'
+import { useCanvasConfirm } from './hooks/use-canvas-confirm'
 
 /*
   캔버스
@@ -13,11 +15,13 @@ export const Canvas = () => {
   const { canvasRef, workerRef, sendToWorker } = useCanvasWebWorkerThread()
   //이미지 업로드
   const { imageCanvasRef, uploadImage } = useCanvasImgUpload()
+  //초기화 , 이미지저장 conform
+  const { initCanvas, saveCanvas } = useCanvasConfirm(canvasRef, imageCanvasRef, workerRef)
 
   const [lastPosition, setLastPosition] = useState<Point | null>(null) // 마지막 위치 상태 추가
 
   /*
-   캔버스 마우스 이벤트
+   캔버스 마우스 이벤트s
    */
   const canvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const position = getCanvasPosition(e)
@@ -45,22 +49,14 @@ export const Canvas = () => {
     setLastPosition(null)
   }
 
-  const initCanvas = () => {
-    setLastPosition(null) // 마지막 위치 초기화
-
-    if (workerRef.current) {
-      workerRef.current.postMessage({ type: 'reset' })
-    }
-  }
-
   return (
     <div className="flex flex-col p-4 bg-gray-light rounded-lg shadow ">
       <input type="file" accept="image/*" onChange={uploadImage} />
       <div style={{ position: 'relative', width: '800px', height: '600px', background: 'white' }}>
         <canvas
           ref={canvasRef}
-          width={800}
-          height={600}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
           onMouseDown={canvasMouseDown}
           onMouseMove={canvasMouseMove}
           onMouseUp={canvasMouseUp}
@@ -70,17 +66,12 @@ export const Canvas = () => {
         />
         <canvas
           ref={imageCanvasRef}
-          width={800}
-          height={600}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
           style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}
         />
       </div>
-      <CanvasConfirm
-        undo={() => console.log('1')}
-        redo={() => console.log('1')}
-        init={initCanvas}
-        save={() => console.log('1')}
-      />
+      <CanvasConfirm undo={() => console.log('1')} redo={() => console.log('1')} init={initCanvas} save={saveCanvas} />
       {/*<CanvasConfirm undo={undoCanvas} redo={redoCanvas} init={handleInitCanvas} save={saveCanvas} />*/}
     </div>
   )
