@@ -1,19 +1,15 @@
 /*
  canvas paint worker  :OffscreenCanvas를 사용, Worker를 도입 캔버스 paint 로직 스레드 분리
  */
+import type { Point } from '../../types/cnavas-types'
 ;(function () {
   type PaintWorkerMessage = {
-    type: 'setup' | 'draw' | 'end' | 'reset'
+    type: 'setup' | 'draw' | 'erase' | 'end' | 'reset'
     canvas?: OffscreenCanvas
-    start?: Coordinate
-    end?: Coordinate
+    start?: Point
+    end?: Point
     color: string
     lineWidth: 5
-  }
-
-  interface Coordinate {
-    x: number
-    y: number
   }
 
   let canvas: OffscreenCanvas | null = null
@@ -27,6 +23,12 @@
       case 'draw':
         if (e.data.start && e.data.end) {
           drawLineCanvas(e.data.start, e.data.end, e.data.color, e.data.lineWidth)
+        }
+        break
+      case 'erase':
+        if (e.data.start && e.data.end) {
+          console.log('worker-erase')
+          eraseLineCanvas(e.data.start, e.data.end, e.data.lineWidth)
         }
         break
       case 'end':
@@ -43,7 +45,7 @@
     ctx = canvas.getContext('2d') as OffscreenCanvasRenderingContext2D
   }
 
-  function drawLineCanvas(start: Coordinate, end: Coordinate, color: string = 'black', lineWidth: number = 5) {
+  function drawLineCanvas(start: Point, end: Point, color: string = 'black', lineWidth: number = 5) {
     if (!ctx) return
     ctx.lineJoin = 'round'
     ctx.strokeStyle = color
@@ -55,6 +57,17 @@
     ctx.closePath()
 
     ctx.stroke()
+  }
+
+  function eraseLineCanvas(start: Point, end: Point, lineWidth: number) {
+    if (!ctx) return
+    ctx.globalCompositeOperation = 'destination-out' // Set erase mode
+    ctx.lineWidth = lineWidth
+    ctx.beginPath() // 시작 경로
+    ctx.moveTo(start.x, start.y) // 지우기 시작 위치
+    ctx.lineTo(end.x, end.y) // 지우기 종료 위치
+    ctx.stroke() // 경로 그리기 (지우기)
+    ctx.globalCompositeOperation = 'source-over' // Reset to default drawing mode
   }
 
   function leaveCanvas() {}

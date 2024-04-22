@@ -1,7 +1,7 @@
 export interface CanvasType {
   color: string
-  tool: string
-  setTool: (tool: string) => void
+  tool: CanvasToolType
+  setTool: (tool: CanvasToolType) => void
   setColor: (color: string) => void
   lineWidth: number
   setLineWidth: (lineWidth: number) => void
@@ -11,3 +11,5 @@ export interface Point {
   x: number
   y: number
 }
+
+export type CanvasToolType = 'setup' | 'draw' | 'erase' | 'end' | 'reset'

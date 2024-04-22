@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import React, { createContext, useContext, useState } from 'react'
 import { INIT_COLOR_CANVAS, INIT_LINE_WIDTH_CANVAS } from '../../../constants/constants-canvas'
-import type { CanvasType } from '../../types/cnavas-types'
+import type { CanvasToolType, CanvasType } from '../../types/cnavas-types'
 
 const CanvasContext = createContext<CanvasType | null>(null)
 
@@ -16,7 +16,7 @@ export const useCanvasContext = (): CanvasType => {
 export const CanvasProvider = ({ children }: PropsWithChildren) => {
   const [color, setColor] = useState<string>(INIT_COLOR_CANVAS)
   const [lineWidth, setLineWidth] = useState<number>(INIT_LINE_WIDTH_CANVAS)
-  const [tool, setTool] = useState<string>('brush')
+  const [tool, setTool] = useState<CanvasToolType>('draw')
 
   return (
     <CanvasContext.Provider value={{ color, setColor, lineWidth, setLineWidth, tool, setTool }}>

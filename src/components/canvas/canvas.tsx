@@ -6,11 +6,14 @@ import type { Point } from '../types/cnavas-types'
 import { getCanvasPosition } from './utils/canvas'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../../constants/constants-canvas'
 import { useCanvasConfirm } from './hooks/use-canvas-confirm'
+import { useCanvasContext } from './context/canvas-provider'
 
 /*
   캔버스
  */
 export const Canvas = () => {
+  const { tool } = useCanvasContext()
+
   //web-worker
   const { canvasRef, workerRef, sendToWorker } = useCanvasWebWorkerThread()
   //이미지 업로드
@@ -26,7 +29,7 @@ export const Canvas = () => {
   const canvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const position = getCanvasPosition(e)
     setLastPosition(position) // 마우스 다운 시 시작 위치 설정
-    sendToWorker(workerRef, 'start', position)
+    sendToWorker(workerRef, 'setup', position)
   }
 
   const canvasMouseUp = () => {
@@ -38,7 +41,7 @@ export const Canvas = () => {
     const newPosition = getCanvasPosition(e)
 
     if (lastPosition) {
-      sendToWorker(workerRef, 'draw', lastPosition, newPosition)
+      sendToWorker(workerRef, tool, lastPosition, newPosition)
       setLastPosition(newPosition) // 현재 위치를 마지막 위치로 업데이트
     }
   }

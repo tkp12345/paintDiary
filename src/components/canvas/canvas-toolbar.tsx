@@ -3,14 +3,15 @@ import { useCanvasContext } from './context/canvas-provider'
 import { Button } from '../ui/button'
 
 export const CanvasToolbar = () => {
-  const { color, setColor, lineWidth, setLineWidth, setTool } = useCanvasContext()
+  const { color, setColor, tool, lineWidth, setLineWidth, setTool } = useCanvasContext()
+
   return (
     <div className="toolbar space-x-2 p-4 bg-gray-light rounded-lg shadow">
       <div className="flex flex-col gap-2">
-        <Button color="blue" onClick={() => setTool('brush')}>
+        <Button active={tool === 'draw'} onClick={() => setTool('draw')}>
           🖌️ Brush
         </Button>
-        <Button color="gray" onClick={() => setTool('eraser')}>
+        <Button active={tool === 'erase'} onClick={() => setTool('erase')}>
           🧽 Eraser
         </Button>
       </div>
