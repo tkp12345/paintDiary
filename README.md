@@ -27,3 +27,12 @@
 >
  FileReader와 Image 객체 를 개선하여 
  이미지 로딩 최적화: createImageBitmap 사용하여  최적화된 방식으로 이미지를 처리 
+ 
+### 트러블슈팅
+> 초기화 오류
+> 
+globalCompositeOperation 사용이후 
+
+> 스냅샷 방식 
+
+초기엔 

@@ -7,6 +7,7 @@ import { getCanvasPosition } from './utils/canvas'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../../constants/constants-canvas'
 import { useCanvasConfirm } from './hooks/use-canvas-confirm'
 import { useCanvasContext } from './context/canvas-provider'
+import { useCanvasUndoRedo } from './hooks/use-canvas-undo-redo'
 
 /*
   캔버스
@@ -16,6 +17,9 @@ export const Canvas = () => {
 
   //web-worker
   const { canvasRef, workerRef, sendToWorker } = useCanvasWebWorkerThread()
+
+  //paint 뒤로가기 , 앞으로가기
+  const { takeSnapshot, undoDrawCanvas, redoDrawCanvas } = useCanvasUndoRedo(canvasRef, workerRef)
   //이미지 업로드
   const { imageCanvasRef, uploadImage } = useCanvasImgUpload()
   //초기화 , 이미지저장 conform
@@ -24,7 +28,7 @@ export const Canvas = () => {
   const [lastPosition, setLastPosition] = useState<Point | null>(null) // 마지막 위치 상태 추가
 
   /*
-   캔버스 마우스 이벤트s
+   캔버스 마우스 이벤트
    */
   const canvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const position = getCanvasPosition(e)
@@ -33,6 +37,7 @@ export const Canvas = () => {
   }
 
   const canvasMouseUp = () => {
+    takeSnapshot()
     sendToWorker(workerRef, 'end')
     setLastPosition(null) // 마우스를 떼면 마지막 위치 초기화
   }
@@ -74,8 +79,7 @@ export const Canvas = () => {
           style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}
         />
       </div>
-      <CanvasConfirm undo={() => console.log('1')} redo={() => console.log('1')} init={initCanvas} save={saveCanvas} />
-      {/*<CanvasConfirm undo={undoCanvas} redo={redoCanvas} init={handleInitCanvas} save={saveCanvas} />*/}
+      <CanvasConfirm undo={undoDrawCanvas} redo={redoDrawCanvas} init={initCanvas} save={saveCanvas} />
     </div>
   )
 }

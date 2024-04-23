@@ -12,4 +12,4 @@ export interface Point {
   y: number
 }
 
-export type CanvasToolType = 'setup' | 'draw' | 'erase' | 'end' | 'reset'
+export type CanvasToolType = 'setup' | 'draw' | 'erase' | 'end' | 'reset' | 'snapshot' | 'undo' | 'redo'
