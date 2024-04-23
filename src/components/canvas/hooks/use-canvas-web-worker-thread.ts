@@ -1,6 +1,6 @@
 import type { MutableRefObject } from 'react'
 import { useEffect, useRef } from 'react'
-import type { Point } from '../../types/cnavas-types'
+import type { CanvasToolType, Point } from '../../types/cnavas-types'
 import { useCanvasContext } from '../context/canvas-provider'
 
 /*
@@ -8,7 +8,6 @@ import { useCanvasContext } from '../context/canvas-provider'
  */
 export const useCanvasWebWorkerThread = () => {
   const { color, lineWidth } = useCanvasContext()
-
   //캔버스 참조
   const canvasRef = useRef<HTMLCanvasElement>(null)
   //web-worker 참조
@@ -33,12 +32,17 @@ export const useCanvasWebWorkerThread = () => {
   // webWorker 스레드로 캔버스 이벤트 위임
   const sendToWorker = (
     workerRef: MutableRefObject<Worker | null>,
-    type: 'start' | 'draw' | 'end',
+    type: CanvasToolType,
     start?: Point,
     end?: Point,
+    offscreen?: OffscreenCanvas,
   ) => {
     if (type === 'draw' && start && end) {
       workerRef.current?.postMessage({ type, start, end, color, lineWidth })
+    } else if (type === 'erase' && start && end) {
+      workerRef.current?.postMessage({ type, start, end, lineWidth })
+    } else if (type === 'reset') {
+      workerRef.current?.postMessage({ type: 'reset', canvas: offscreen })
     } else {
       workerRef.current?.postMessage({ type, start, color, lineWidth })
     }
