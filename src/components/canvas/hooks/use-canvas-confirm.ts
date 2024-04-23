@@ -1,3 +1,4 @@
+import type { MutableRefObject, RefObject } from 'react'
 import { useCallback, useEffect } from 'react'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../../../constants/constants-canvas'
 import { toast } from 'react-toastify'
@@ -8,9 +9,9 @@ import debounce from '../../../utils/utils'
   캔버스 저장,초기화 버튼 관리 훅스
  */
 export const useCanvasConfirm = (
-  canvasRef: React.RefObject<HTMLCanvasElement>,
-  imageCanvasRef: React.RefObject<HTMLCanvasElement>,
-  workerRef: React.MutableRefObject<Worker | null>,
+  canvasRef: RefObject<HTMLCanvasElement>,
+  imageCanvasRef: RefObject<HTMLCanvasElement>,
+  workerRef: MutableRefObject<Worker | null>,
 ) => {
   //캔버스 초기화
   const initCanvas = () => {
