@@ -6,7 +6,9 @@
 ## 실행
 ```typescript
     npm install
-    npm run start
+    npm run start 
+
+    http://localhost:1212 실행
 ```
 
 </br>
