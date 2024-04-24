@@ -19,7 +19,7 @@ export const Canvas = () => {
   const { canvasRef, workerRef, sendToWorker } = useCanvasWebWorkerThread()
 
   //paint 뒤로가기 , 앞으로가기
-  const { takeSnapshot, undoDrawCanvas, redoDrawCanvas } = useCanvasUndoRedo(canvasRef)
+  const { takeSnapshot, undoDrawCanvas, redoDrawCanvas } = useCanvasUndoRedo(workerRef)
   //이미지 업로드
   const { imageCanvasRef, uploadImage } = useCanvasImgUpload()
   //초기화 , 이미지저장 conform

@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel -p 1212 ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url ./ --out-dir build/output --no-source-maps",
-    "test": "jest"
+    "build": "parcel build ./src/index.html --public-url ./ --out-dir build/output --no-source-maps"
   },
   "keywords": [],
   "author": "",
@@ -43,14 +42,6 @@
   "devDependencies": {
     "@babel/core": "^7.24.4",
     "@babel/preset-env": "^7.24.4",
-    "@babel/preset-typescript": "^7.24.1",
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^15.0.2",
-    "@testing-library/react-hooks": "^8.0.1",
-    "@types/jest": "^29.5.12",
-    "babel-jest": "^29.7.0",
-    "jest": "^29.7.0",
-    "jest-canvas-mock": "^2.5.2",
-    "jest-environment-jsdom": "^29.7.0"
+    "@babel/preset-typescript": "^7.24.1"
   }
 }
