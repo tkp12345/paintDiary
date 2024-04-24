@@ -1,4 +1,5 @@
-import { ToastContainerProps, ToastPosition } from 'react-toastify'
+import type { ToastContainerProps, ToastPosition } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 export const toastDefaultOptions: ToastContainerProps = {
   position: 'bottom-center' as ToastPosition,
@@ -21,4 +22,13 @@ export const toastOptions: ToastContainerProps = {
   pauseOnHover: true,
   draggable: true,
   theme: 'dark',
+}
+
+export const _toast = {
+  success: (message: string) => {
+    toast.success(message, toastOptions)
+  },
+  error: (message: string) => {
+    toast.error(message, toastOptions)
+  },
 }

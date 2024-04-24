@@ -1,6 +1,5 @@
 import { useCallback, useRef } from 'react'
-import { toast } from 'react-toastify'
-import { toastOptions } from '../../../../lib/react-toastify/toastify-options'
+import { _toast } from '../../../../lib/react-toastify/toastify-options'
 
 export const useCanvasImgUpload = () => {
   const imageCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -10,7 +9,7 @@ export const useCanvasImgUpload = () => {
       const file = event.target.files ? event.target.files[0] : null
 
       if (!file || !file.type.startsWith('image/')) {
-        toast.error('이미지 파일을 선택해 주세요.', { ...toastOptions })
+        _toast.error('이미지 파일을 선택해 주세요.')
         return
       }
 
@@ -27,7 +26,7 @@ export const useCanvasImgUpload = () => {
           }
         })
         .catch((error) => {
-          toast.error('이미지 업로드에 실해팼습니다.', { ...toastOptions })
+          _toast.error('이미지 업로드에 실해팼습니다.')
           console.error('Failed to create image bitmap:', error)
         })
     },

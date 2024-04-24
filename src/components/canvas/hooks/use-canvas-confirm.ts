@@ -1,8 +1,7 @@
 import type { MutableRefObject, RefObject } from 'react'
 import { useCallback, useEffect } from 'react'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../../../constants/constants-canvas'
-import { toast } from 'react-toastify'
-import { toastOptions } from '../../../../lib/react-toastify/toastify-options'
+import { _toast } from '../../../../lib/react-toastify/toastify-options'
 import debounce from '../../../utils/utils'
 
 /*
@@ -23,7 +22,7 @@ export const useCanvasConfirm = (
   //캔버스 저장(다운로드)
   const saveCanvas = useCallback(
     debounce(() => {
-      if (!canvasRef.current) return toast.error('저장할 요소가 없습니다')
+      if (!canvasRef.current) return _toast.error('저장할 요소가 없습니다')
 
       try {
         //배경 캔버스 , 드로잉 캔버스 병합 요소 생성
@@ -48,9 +47,9 @@ export const useCanvasConfirm = (
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
-        toast.success('이미지가 저장됬습니다.', { ...toastOptions })
+        _toast.success('이미지가 저장됬습니다.')
       } catch (err) {
-        toast.error('저장에 실패했습니다. 다시한번 시도해주세요.', { ...toastOptions })
+        _toast.error('저장에 실패했습니다. 다시한번 시도해주세요.')
       }
     }, 300),
     [canvasRef],
@@ -62,7 +61,7 @@ export const useCanvasConfirm = (
   useEffect(() => {
     const handleWorkerMessage = (e: MessageEvent) => {
       if (e.data.type === 'resetComplete') {
-        toast.success('캔버스가 초기화 되었습니다.', { ...toastOptions })
+        _toast.success('캔버스가 초기화 되었습니다.')
       }
     }
 
