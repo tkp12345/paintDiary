@@ -20,7 +20,7 @@ export const CanvasProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <CanvasContext.Provider value={{ color, setColor, lineWidth, setLineWidth, tool, setTool }}>
-      <div className="p-5 flex gap-2">{children}</div>
+      <div className="w-full p-5 flex gap-2">{children}</div>
     </CanvasContext.Provider>
   )
 }
