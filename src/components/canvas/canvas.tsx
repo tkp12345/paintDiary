@@ -19,11 +19,11 @@ export const Canvas = () => {
   const { canvasRef, workerRef, sendToWorker } = useCanvasWebWorkerThread()
 
   //paint 뒤로가기 , 앞으로가기
-  const { takeSnapshot, undoDrawCanvas, redoDrawCanvas } = useCanvasUndoRedo(canvasRef, workerRef)
+  const { takeSnapshot, undoDrawCanvas, redoDrawCanvas } = useCanvasUndoRedo(canvasRef)
   //이미지 업로드
   const { imageCanvasRef, uploadImage } = useCanvasImgUpload()
   //초기화 , 이미지저장 conform
-  const { initCanvas, saveCanvas } = useCanvasConfirm(canvasRef, imageCanvasRef, workerRef)
+  const { initCanvas, saveImgCanvas, saveCanvas } = useCanvasConfirm(canvasRef, imageCanvasRef, workerRef)
 
   const [lastPosition, setLastPosition] = useState<Point | null>(null) // 마지막 위치 상태 추가
 
@@ -58,7 +58,7 @@ export const Canvas = () => {
   }
 
   return (
-    <div className="flex flex-col p-4 bg-gray-light rounded-lg shadow ">
+    <div style={styles.canvasWrap}>
       <input type="file" accept="image/*" onChange={uploadImage} />
       <div style={{ position: 'relative', width: '800px', height: '600px', background: 'white' }}>
         <canvas
@@ -79,7 +79,26 @@ export const Canvas = () => {
           style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}
         />
       </div>
-      <CanvasConfirm undo={undoDrawCanvas} redo={redoDrawCanvas} init={initCanvas} save={saveCanvas} />
+      <CanvasConfirm
+        undo={undoDrawCanvas}
+        redo={redoDrawCanvas}
+        init={initCanvas}
+        save={saveCanvas}
+        saveImg={saveImgCanvas}
+      />
     </div>
   )
+}
+
+const styles: { [key: string]: React.CSSProperties } = {
+  canvasWrap: {
+    width: 'fit-content',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '16px',
+    backgroundColor: '#f0f0f0', // 밝은 회색 계열로 배경색 설정
+    borderRadius: '12px', // 모서리 둥글게 처리
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 추가
+    border: '1px solid #e0e0e0', // 경계선을 더 세련되게
+  },
 }

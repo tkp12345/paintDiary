@@ -12,6 +12,7 @@ export const toastDefaultOptions: ToastContainerProps = {
   draggable: true,
   pauseOnHover: true,
   theme: 'dark',
+  style: { width: 'fit-content' },
 }
 
 export const toastOptions: ToastContainerProps = {
@@ -22,6 +23,7 @@ export const toastOptions: ToastContainerProps = {
   pauseOnHover: true,
   draggable: true,
   theme: 'dark',
+  style: { width: 'fit-content' },
 }
 
 export const _toast = {

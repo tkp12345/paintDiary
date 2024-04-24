@@ -89,6 +89,8 @@ import type { CanvasToolType, Point } from '../../types/cnavas-types'
   function leaveCanvas() {}
 
   function resetCanvas() {
+    snapShotStack.splice(0, snapShotStack.length)
+    currentIndex = -1
     if (ctx) {
       ctx.clearRect(0, 0, 800, 600) // 캔버스 전체 클리어
       postMessage({ type: 'resetComplete' }) // 작업 완료 메시지 전송
